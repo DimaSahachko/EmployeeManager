@@ -1,0 +1,193 @@
+<div *ngIf="!editMode">
+  <h1 class="text-center">Create new employee</h1>
+  <form class="mt-3" (ngSubmit)="onSubmit(form)" #form="ngForm">
+    <div class="mb-3">
+      <label for="name" class="form-label fs-3">Employee full name:</label>
+      <input
+        type="text"
+        class="form-control fs-3"
+        id="name"
+        name="name"
+        ngModel
+        required
+        #name="ngModel"
+      />
+      <p class="text-center text-danger" *ngIf="!name.valid && name.touched">
+        Please provide a valid name
+      </p>
+    </div>
+    <div class="mb-3">
+      <label for="age" class="form-label fs-3">Age:</label>
+      <input
+        type="number"
+        class="form-control fs-3"
+        id="age"
+        name="age"
+        ngModel
+        required
+        min="18"
+        max="100"
+        #age="ngModel"
+      />
+      <p class="text-center text-danger" *ngIf="!age.valid && age.touched">
+        Age can be between 18 and 100
+      </p>
+    </div>
+    <div class="text-center mt-3">
+      <button
+        type="button"
+        class="btn btn-outline-warning me-2 text-dark border-2"
+        (click)="onReset(form)"
+      >
+        Reset
+      </button>
+      <button
+        type="submit"
+        class="btn btn-outline-success ms-2 px-3 border-2"
+        [disabled]="!form.valid"
+        data-bs-toggle="modal"
+        data-bs-target="#saveModal"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>
+<div class="text-center text-danger mt-3" *ngIf="!editMode && error">
+  <p class="h3">Error occured</p>
+  <p>{{ error }}</p>
+</div>
+
+<div *ngIf="editMode">
+  <h1 class="text-center">Edit {{ editedEmployee.name }}</h1>
+  <form class="mt-3" (ngSubmit)="onSubmit(form)" #form="ngForm">
+    <div class="mb-3">
+      <label for="name" class="form-label fs-3">Employee full name:</label>
+      <input
+        type="text"
+        class="form-control fs-3"
+        id="name"
+        name="name"
+        [ngModel]="editedEmployee.name"
+        required
+        #name="ngModel"
+      />
+      <p class="text-center text-danger" *ngIf="!name.valid && name.touched">
+        Please provide a valid name
+      </p>
+    </div>
+    <div class="mb-3">
+      <label for="age" class="form-label fs-3">Age:</label>
+      <input
+        type="number"
+        class="form-control fs-3"
+        id="age"
+        name="age"
+        [ngModel]="editedEmployee.age"
+        required
+        min="18"
+        max="100"
+        #age="ngModel"
+      />
+      <p class="text-center text-danger" *ngIf="!age.valid && age.touched">
+        Age can be between 18 and 100
+      </p>
+    </div>
+    <div class="text-center mt-3">
+      <button
+        type="button"
+        class="btn btn-outline-warning me-2 text-dark border-2"
+        (click)="onReset(form)"
+      >
+        Reset
+      </button>
+      <button
+        type="submit"
+        class="btn btn-outline-success ms-2 px-3 border-2"
+        [disabled]="!form.valid"
+        data-bs-toggle="modal"
+        data-bs-target="#updateModal"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>
+<div class="text-center text-danger mt-3" *ngIf="editMode && error">
+  <p class="h3">Error occured</p>
+  <p>{{ error }}</p>
+</div>
+
+<!-- Modal window on SAVE-->
+<div
+  class="modal fade"
+  id="saveModal"
+  tabindex="-1"
+  aria-labelledby="saveModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="saveModal">Have you finished?</h1>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to create a new employee?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-warning text-dark"
+          data-bs-dismiss="modal"
+        >
+          No, close
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          (click)="onCreate()"
+          data-bs-dismiss="modal"
+        >
+          Yes, create
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal window on UPDATE -->
+<div
+  class="modal fade"
+  id="updateModal"
+  tabindex="-1"
+  aria-labelledby="updateModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="saveModal">Have you finished?</h1>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to update this information?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-warning text-dark"
+          data-bs-dismiss="modal"
+        >
+          No, close
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          (click)="onUpdate()"
+          data-bs-dismiss="modal"
+        >
+          Yes, update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

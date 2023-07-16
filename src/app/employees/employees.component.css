@@ -1,0 +1,12 @@
+div.list-group a:hover {
+    background-color: #ffc107;
+}
+
+a.active {
+    background-color: #ffc107;
+    color: black;
+}
+
+.my-pagination ::ng-deep .ngx-pagination .current {
+    background: #ffc107;
+}
